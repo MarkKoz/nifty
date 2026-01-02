@@ -2,7 +2,7 @@ import io
 from collections.abc import Generator
 from typing import Any
 
-from pyffi.object_models.xml import FileFormat
+from pyffi.object_models.xml import FileFormat, StructBase
 from pyffi.utils.graph import EdgeFilter
 
 class NifFormat(FileFormat):
@@ -15,7 +15,7 @@ class NifFormat(FileFormat):
 
     class NiGeometry:
         name: bytes
-        skin_instance: NifFormat.BSDismemberSkinInstance | None
+        skin_instance: NifFormat.BSDismemberSkinInstance | StructBase | None
 
     class BSDismemberSkinInstance:
         partitions: list[NifFormat.BodyPartList]

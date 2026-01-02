@@ -20,7 +20,7 @@ def list_skin_instances(
 ) -> Iterator[tuple[NifFormat.NiGeometry, NifFormat.BSDismemberSkinInstance]]:
     for parent in data.get_global_iterator():
         if isinstance(parent, NifFormat.NiGeometry):
-            if parent.skin_instance:
+            if isinstance(parent.skin_instance, NifFormat.BSDismemberSkinInstance):
                 yield parent, parent.skin_instance
 
 

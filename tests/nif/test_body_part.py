@@ -20,6 +20,12 @@ def get_body_parts(geometry: NifFormat.NiGeometry) -> list[int]:
     if not geometry.skin_instance:
         raise ValueError("Geometry does not have a skin instance")
 
+    if not isinstance(geometry.skin_instance, NifFormat.BSDismemberSkinInstance):
+        raise TypeError(
+            f"Skin instance is {type(geometry.skin_instance.__name__)} "
+            f"but expected {type(NifFormat.BSDismemberSkinInstance).__name__}"
+        )
+
     return [p.body_part for p in geometry.skin_instance.partitions]
 
 
@@ -60,3 +66,8 @@ def test_replace_body_parts_with_filter(nif_file: NifFormat.Data):
     assert get_body_parts(root.children[4]) == [44, 32]
     assert get_body_parts(root.children[5]) == [32, 32, 32]
     assert get_body_parts(root.children[6]) == [34, 32, 38, 32]
+
+
+def test_set_body_parts_no_partitions():
+    with importlib.resources.path(tests.resources, "ring.nif") as path:
+        body_part.set_body_parts(read_nif(path), 50)
