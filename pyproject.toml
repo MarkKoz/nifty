@@ -105,4 +105,4 @@ version_scheme = "python-simplified-semver"
 compile-bytecode = true
 
 [tool.uv.sources]
-pyffi = { path = "../pyffi" }
+pyffi = { git = "https://github.com/MarkKoz/pyffi.git", rev = "modernise_packaging" }
