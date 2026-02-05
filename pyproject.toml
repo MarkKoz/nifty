@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nifty"
-description = "Tools to automate NIF file operations"
+description = "Command-line tools to automate NIF file operations"
 readme = "README.md"
 version = "1.0"
 
