@@ -78,6 +78,7 @@ def list_body_parts(
         str | None,
         typer.Option(help="Regular expression pattern to filter geometry by name."),
     ] = None,
+    error: Annotated[bool, typer.Option(help="Exit with an error if no body parts found.")] = False,
 ) -> None:
     """List the body part of all partitions in all BSDismemberSkinInstance blocks in a NIF file."""
     log.info("Reading file: %s", file)
@@ -85,5 +86,12 @@ def list_body_parts(
 
     name_pattern = re.compile(name.encode("utf8")) if name else None
 
+    found = False
     for geometry_name, partition, body_part in nif.body_part.list_body_parts(data, name_pattern):
         log.info("%s partition %d: %s", geometry_name, partition, body_part)
+        found = True
+
+    if not found:
+        log.log(logging.ERROR if error else logging.WARNING, "No body parts found")
+        if error:
+            raise typer.Exit(1)
